@@ -4,7 +4,12 @@ const addTopic = async ({ request, response }) => {
     const body = request.body({ type: "form" })
     const params = await body.value
 
-    response.redirect("/")
+    await topicService.addTopic(1, params.get("name"))
+    response.redirect("/topics")
 }
 
-export { addTopic }
+const listTopics = async ({ render }) => {
+    render("topics.eta", { topics: await topicService.listTopics() })
+}
+
+export { addTopic, listTopics }

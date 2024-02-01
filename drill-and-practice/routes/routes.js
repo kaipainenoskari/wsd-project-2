@@ -6,6 +6,7 @@ const router = new Router();
 
 router.get("/", mainController.showMain);
 
+router.get("/topics", topicController.listTopics)
 router.post("/topics", topicController.addTopic)
 
 export { router };

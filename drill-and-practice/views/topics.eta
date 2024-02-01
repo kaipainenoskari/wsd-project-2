@@ -1,5 +1,15 @@
 <% layout('./layouts/layout.eta') %>
 
+<% if (it.topics && it.topics.length > 0) { %>
+    <ul>
+        <% it.topics.forEach(topic => { %>
+            <li><%= topic.name %></li>
+        <% }); %>
+    </ul>
+    <% } else { %>
+    <p>None available.</p>
+<% } %>
+
 <form method="POST" action="/topics">
     <input type="text" name="name"/>
 </form>
