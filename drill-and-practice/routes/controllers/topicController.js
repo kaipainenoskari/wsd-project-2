@@ -12,4 +12,15 @@ const listTopics = async ({ render }) => {
     render("topics.eta", { topics: await topicService.listTopics() })
 }
 
-export { addTopic, listTopics }
+const listSingleTopic = async ({ render, params }) => {
+    const id = params.id
+    render("topic.eta", { topic: await topicService.listSingleTopic(id) })
+}
+
+const deleteTopic = async ({ response, params }) => {
+    const id = params.id
+    await topicService.deleteTopic(id)
+    response.redirect("/topics")
+}
+
+export { addTopic, listTopics, listSingleTopic, deleteTopic }

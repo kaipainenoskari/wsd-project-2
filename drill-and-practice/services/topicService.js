@@ -9,4 +9,12 @@ const listTopics = async () => {
     return rows
 }
 
-export { addTopic, listTopics }
+const listSingleTopic = async (id) => {
+    return (await sql`SELECT * FROM topics WHERE id = ${id}`)[0]
+}
+
+const deleteTopic = async (id) => {
+    await sql`DELETE FROM topics WHERE id = ${id}`
+}
+
+export { addTopic, listTopics, listSingleTopic, deleteTopic }
