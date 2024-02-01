@@ -1,4 +1,5 @@
 import * as topicService from "../../services/topicService.js"
+import * as questionService from "../../services/questionService.js"
 
 const addTopic = async ({ request, response }) => {
     const body = request.body({ type: "form" })
@@ -14,7 +15,8 @@ const listTopics = async ({ render }) => {
 
 const listSingleTopic = async ({ render, params }) => {
     const id = params.id
-    render("topic.eta", { topic: await topicService.listSingleTopic(id) })
+    const questions = await questionService.listQuestions(id)
+    render("topic.eta", { topic: await topicService.listSingleTopic(id), questions })
 }
 
 const deleteTopic = async ({ response, params }) => {

@@ -3,6 +3,7 @@ import * as mainController from "./controllers/mainController.js";
 import * as topicController from "./controllers/topicController.js";
 import * as registrationController from "./controllers/registrationController.js";
 import * as loginController from "./controllers/loginController.js"
+import * as questionController from "./controllers/questionController.js"
 
 const router = new Router();
 
@@ -13,6 +14,8 @@ router.post("/topics", topicController.addTopic)
 
 router.get("/topics/:id", topicController.listSingleTopic)
 router.post("/topics/:id/delete", topicController.deleteTopic)
+
+router.post("/topics/:id/questions", questionController.addQuestion)
 
 router.get("/auth/register", registrationController.showRegistrationForm)
 router.post("/auth/register", registrationController.registerUser)
