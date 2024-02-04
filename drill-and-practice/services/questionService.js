@@ -10,4 +10,8 @@ const listQuestions = async (topicId) => {
     return await sql`SELECT * FROM questions WHERE topic_id = ${topicId}`
 }
 
-export { addQuestion, listQuestions };
+const listSingleQuestion = async (topicId, questionID) => {
+  return await sql`SELECT * FROM questions WHERE topic_id = ${topicId} AND id = ${questionID}`
+}
+
+export { addQuestion, listQuestions, listSingleQuestion };

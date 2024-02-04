@@ -1,0 +1,8 @@
+<% layout('./layouts/layout.eta') %>
+
+<%= it.question.question_text %>
+
+<form method="POST" action="/topics/<%= it.question.topic_id %>/questions/<%= it.question.id %>/options">
+    <input type="text" name="option_text"/>
+    <input type="checkbox" name="is_correct" />
+</form>

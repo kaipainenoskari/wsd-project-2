@@ -28,4 +28,13 @@ const addQuestion = async ({ request, response, render, user, params }) => {
     }
 }
 
-export { addQuestion }
+const listSingleQuestion = async ({ render, params }) => {
+    const id = params.id
+    const qId = params.qId
+    const question = await questionService.listSingleQuestion(id, qId)
+    if (question && question.length != 0) {
+        render("question.eta", { question: question[0] })
+    }
+}
+
+export { addQuestion, listSingleQuestion }

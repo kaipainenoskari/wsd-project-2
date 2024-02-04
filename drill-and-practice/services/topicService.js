@@ -1,4 +1,5 @@
 import { sql } from "../database/database.js";
+import * as questionService from "./questionService.js"
 
 const addTopic = async (userID, name) => {
     await sql`INSERT INTO topics (user_id, name) VALUES (${userID}, ${name})`
@@ -14,6 +15,8 @@ const listSingleTopic = async (id) => {
 }
 
 const deleteTopic = async (id) => {
+    const questions = await questionService.listQuestions(id)
+    // todo delete options from every question, delete every question, delete topic
     await sql`DELETE FROM topics WHERE id = ${id}`
 }
 

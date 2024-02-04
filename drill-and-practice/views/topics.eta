@@ -1,13 +1,25 @@
 <% layout('./layouts/layout.eta') %>
 
+<% if (it.topicData.validationErrors) { %>
+<ul>
+    <% Object.keys(it.topicData.validationErrors).forEach((attribute) => { %>
+        <% Object.values(it.topicData.validationErrors[attribute]).forEach((err) => { %>
+            <li><%= err %></li>
+        <% }); %>
+    <% }); %>
+</ul>
+<% } %>
+
 <% if (it.topics && it.topics.length > 0) { %>
     <ul>
         <% it.topics.forEach(topic => { %>
             <li>
                 <a href="/topics/<%= topic.id %>"><%= topic.name %></a>
-                <form method="POST" action="/topics/<%= topic.id %>/delete">
-                    <input type="submit" value="Delete"/>
-                </form>
+                <% if (it.user.admin) { %>
+                    <form method="POST" action="/topics/<%= topic.id %>/delete">
+                        <input type="submit" value="Delete"/>
+                    </form>
+                <% } %>
             </li>
         <% }); %>
     </ul>
@@ -15,6 +27,8 @@
     <p>None available.</p>
 <% } %>
 
-<form method="POST" action="/topics">
-    <input type="text" name="name"/>
-</form>
+<% if (it.user.admin) { %>
+    <form method="POST" action="/topics">
+        <input type="text" name="name" value="<%= it.topicData.name ? it.topicData.name : "" %>"/>
+    </form>
+<% } %>
