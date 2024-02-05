@@ -1,13 +1,17 @@
 import * as userService from "../../services/userService.js"
 import { bcrypt } from "../../deps.js";
 
-const processLogin = async ({ request, response, state }) => {
+const renderWithErrors = (render) => {
+  render("login.eta", { validationError: "Credentials do not match." })
+}
+
+const processLogin = async ({ request, response, render, state }) => {
     const body = request.body({ type: "form" })
     const params = await body.value
 
     const userFromDatabase = await userService.findUserByEmail(params.get("email"))
     if (userFromDatabase.length !== 1) {
-        response.redirect("auth/login")
+        renderWithErrors(render)
         return
     }
 
@@ -18,10 +22,9 @@ const processLogin = async ({ request, response, state }) => {
     );
   
     if (!passwordMatches) {
-      response.redirect("/auth/login");
-      return;
+      renderWithErrors(render)
+      return
     }
-  
     await state.session.set("user", user);
     response.redirect("/topics");
 }

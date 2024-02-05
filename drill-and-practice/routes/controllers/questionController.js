@@ -1,5 +1,6 @@
 import * as questionService from "../../services/questionService.js"
 import * as topicService from "../../services/topicService.js"
+import * as optionService from "../../services/optionService.js"
 import { validasaur } from "../../deps.js"
 
 const questionValidationRules = {
@@ -21,7 +22,8 @@ const addQuestion = async ({ request, response, render, user, params }) => {
 
     if (!passes) {
         questionData.validationErrors = errors
-        render("topic.eta", { topic: await topicService.listSingleTopic(questionData.id), questionData })
+        render("topic.eta", { topic: await topicService.listSingleTopic(questionData.id), questionData, user })
+        response.redirect("/topics/" + questionData.id)
     } else {
         await questionService.addQuestion(user.id, questionData.id, questionData.question_text)
         response.redirect("/topics/" + questionData.id)
@@ -33,8 +35,15 @@ const listSingleQuestion = async ({ render, params }) => {
     const qId = params.qId
     const question = await questionService.listSingleQuestion(id, qId)
     if (question && question.length != 0) {
-        render("question.eta", { question: question[0] })
+        render("question.eta", { topic: id, question: question[0], options: await optionService.listOptions(qId) })
     }
 }
 
-export { addQuestion, listSingleQuestion }
+const deleteQuestion = async ({ response, params }) => {
+    const questionID = params.qId
+    const topicID = params.id
+    await questionService.deleteQuestion(questionID)
+    response.redirect("/topics/" + topicID)
+}
+
+export { addQuestion, listSingleQuestion, deleteQuestion }

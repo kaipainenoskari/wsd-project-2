@@ -9,7 +9,6 @@ const optionValidationRules = {
 const getOptionData = async (request, params) => {
     const body = request.body({ type: "form" })
     const bodyParams = await body.value
-    console.log("bodyParams:", bodyParams)
     return {
         option_text: bodyParams.get("option_text"),
         is_correct: bodyParams.get("is_correct") ? true : false,
@@ -18,7 +17,7 @@ const getOptionData = async (request, params) => {
     }
 }
 
-const addOption = async ({ request, response, params }) => {
+const addOption = async ({ request, response, params, render }) => {
     const optionData = await getOptionData(request, params)
     const [passes, errors] = await validasaur.validate(optionData, optionValidationRules)
 
@@ -31,4 +30,12 @@ const addOption = async ({ request, response, params }) => {
     }
 }
 
-export { addOption }
+const deleteOption = async ({ response, params }) => {
+    const optionID = params.oId
+    const topicID = params.id
+    const questionID = params.qId
+    await optionService.deleteOption(optionID)
+    response.redirect("/topics/" + topicID + "/questions/" + questionID)
+}
+
+export { addOption, deleteOption }

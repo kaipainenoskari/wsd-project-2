@@ -20,15 +20,20 @@ const addTopic = async ({ render, request, response, user }) => {
 
     if (!passes) {
         topicData.validationErrors = errors
-        render("topics.eta", { topics: await topicService.listTopics(), user: user ? user : {}, topicData })
+        render("topics.eta", { topics: await topicService.listTopics(), topicData })
     } else {
-        await topicService.addTopic(user.id, topicData.name)
+        if (user.admin) {
+            await topicService.addTopic(user.id, topicData.name)
+        }
         response.redirect("/topics")
     }
 }
 
 const listTopics = async ({ render, user }) => {
-    render("topics.eta", { topics: await topicService.listTopics(), user: user ? user : {}, topicData: {} })
+    const topics = await topicService.listTopics()
+    // Sort topics by name
+    const sortedTopics = topics.slice().sort((a, b) => a.name.localeCompare(b.name))
+    render("topics.eta", { topics: sortedTopics, user: user ? user : {}, topicData: {} })
 }
 
 const listSingleTopic = async ({ render, params }) => {
@@ -37,9 +42,11 @@ const listSingleTopic = async ({ render, params }) => {
     render("topic.eta", { topic: await topicService.listSingleTopic(id), questions })
 }
 
-const deleteTopic = async ({ response, params }) => {
+const deleteTopic = async ({ response, params, user }) => {
     const id = params.id
-    await topicService.deleteTopic(id)
+    if (user.admin) {
+        await topicService.deleteTopic(id)
+    }
     response.redirect("/topics")
 }
 

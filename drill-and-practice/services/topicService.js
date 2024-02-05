@@ -15,8 +15,7 @@ const listSingleTopic = async (id) => {
 }
 
 const deleteTopic = async (id) => {
-    const questions = await questionService.listQuestions(id)
-    // todo delete options from every question, delete every question, delete topic
+    await questionService.deleteTopicQuestions(id)
     await sql`DELETE FROM topics WHERE id = ${id}`
 }
 

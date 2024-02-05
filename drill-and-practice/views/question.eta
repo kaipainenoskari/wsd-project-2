@@ -6,3 +6,20 @@
     <input type="text" name="option_text"/>
     <input type="checkbox" name="is_correct" />
 </form>
+
+<% if (it.options && it.options.length > 0) { %>
+    <ul>
+        <% it.options.forEach(option => { %>
+            <li>
+                <%= option.option_text %>: <%= option.is_correct %>
+                <form method="POST" action="/topics/<%= it.topic %>/questions/<%= it.question.id %>/options/<%= option.id %>/delete">
+                    <input type="submit" value="Delete"/>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+    <% } else { %>
+    <form method="POST" action="/topics/<%= it.topic %>/questions/<%= it.question.id %>/delete">
+        <input type="submit" value="Delete question"/>
+    </form>
+<% } %>

@@ -18,8 +18,10 @@ router.post("/topics/:id/delete", topicController.deleteTopic)
 
 router.post("/topics/:id/questions", questionController.addQuestion)
 router.get("/topics/:id/questions/:qId", questionController.listSingleQuestion)
+router.post("/topics/:id/questions/:qId/delete", questionController.deleteQuestion)
 
 router.post("/topics/:id/questions/:qId/options", optionController.addOption)
+router.post("/topics/:id/questions/:qId/options/:oId/delete", optionController.deleteOption)
 
 router.get("/auth/register", registrationController.showRegistrationForm)
 router.post("/auth/register", registrationController.registerUser)
