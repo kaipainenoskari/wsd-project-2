@@ -22,7 +22,7 @@ const addQuestion = async ({ request, response, render, user, params }) => {
 
     if (!passes) {
         questionData.validationErrors = errors
-        render("topic.eta", { topic: await topicService.listSingleTopic(questionData.id), questionData, user })
+        render("topic.eta", { topic: await topicService.listSingleTopic(questionData.id), questionData })
         response.redirect("/topics/" + questionData.id)
     } else {
         await questionService.addQuestion(user.id, questionData.id, questionData.question_text)

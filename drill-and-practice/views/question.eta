@@ -18,7 +18,7 @@
             </li>
         <% }); %>
     </ul>
-    <% } else { %>
+    <% } else if (it.user) { %>
     <form method="POST" action="/topics/<%= it.topic %>/questions/<%= it.question.id %>/delete">
         <input type="submit" value="Delete question"/>
     </form>

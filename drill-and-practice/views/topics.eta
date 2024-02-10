@@ -15,7 +15,7 @@
         <% it.topics.forEach(topic => { %>
             <li>
                 <a href="/topics/<%= topic.id %>"><%= topic.name %></a>
-                <% if (it.user?.admin) { %>
+                <% if (it.user) { %>
                     <form method="POST" action="/topics/<%= topic.id %>/delete">
                         <input type="submit" value="Delete"/>
                     </form>
