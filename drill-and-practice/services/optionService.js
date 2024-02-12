@@ -12,6 +12,10 @@ const listOptions = async (id) => {
     return await sql`SELECT * FROM question_answer_options WHERE question_id = ${id}`
 }
 
+const listOptionWithText = async (text) => {
+    return await sql`SELECT * FROM question_answer_options WHERE option_text = ${text}`
+}
+
 const listCorrectOption = async (qId) => {
     return await sql`SELECT * FROM question_answer_options WHERE question_id = ${qId} AND is_correct = TRUE`
 }
@@ -24,4 +28,4 @@ const deleteQuestionOptions = async (questionID) => {
     await sql`DELETE FROM question_answer_options WHERE question_id = ${questionID}`
 }
 
-export { addOption, deleteOption, listOptions, listCorrectOption, listOption, deleteQuestionOptions }
+export { addOption, deleteOption, listOptions, listOptionWithText, listCorrectOption, listOption, deleteQuestionOptions }

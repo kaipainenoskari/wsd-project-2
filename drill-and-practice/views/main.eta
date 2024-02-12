@@ -5,3 +5,7 @@
 <a href="/auth/login">Login</a>
 </br>
 <a href="/auth/register">Register</a>
+
+<p>Total number of topics: <%= it.topics %></p>
+<p>Total number of questions: <%= it.questions %></p>
+<p>Total number of answers: <%= it.questionAnswers %></p>
